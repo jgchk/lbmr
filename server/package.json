@@ -2,5 +2,15 @@
   "name": "lbmr-server",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "GPL-3.0-or-later"
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^9.3.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  }
 }
