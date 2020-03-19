@@ -2,7 +2,7 @@ import socketIO from 'socket.io-client'
 
 export default class Socket {
   constructor() {
-    this.io = socketIO('https://lbmr.jake.cafe/')
+    this.io = socketIO(window.location.origin)
     this.io.connect()
   }
 
