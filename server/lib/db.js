@@ -21,6 +21,7 @@ export default class Database {
     const res = this.measurements.insert(measurement)
 
     const event = 'add measurement'
+    console.log(event, res)
     this.ee.emit(event, res)
 
     return res
