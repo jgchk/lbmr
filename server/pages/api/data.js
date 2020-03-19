@@ -1,6 +1,6 @@
-import { getMeasurements } from '../../lib/db'
+import Database from '../../lib/db'
 
 export default (req, res) => {
-  const data = getMeasurements()
+  const data = new Database().getMeasurements()
   return res.status(200).json(data)
 }

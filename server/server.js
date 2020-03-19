@@ -2,7 +2,7 @@ import { createServer } from 'http'
 import { parse } from 'url'
 import next from 'next'
 
-import Socket from './lib/socket'
+import Socket from './lib/socket/server'
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -29,6 +29,8 @@ app.prepare().then(() => {
 
   server.listen(3000, err => {
     if (err) throw err
+
+    /* eslint-disable-next-line no-console */
     console.log('> Ready on http://localhost:3000')
   })
 })

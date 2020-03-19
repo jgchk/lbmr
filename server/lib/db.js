@@ -1,14 +1,38 @@
+import EventEmitter from 'events'
 import Loki from 'lokijs'
 
-const db = new Loki('lbmr')
-const measurements = db.addCollection('measurements')
+export default class Database {
+  constructor() {
+    const { instance } = this.constructor
+    if (instance) return instance
+    this.constructor.instance = this
 
-export function addMeasurement(type, data, timestamp) {
-  return measurements.insert({ type, data, timestamp })
-}
+    this.ee = new EventEmitter()
 
-const allView = measurements.addDynamicView('all').applySimpleSort('timestamp')
+    this.db = new Loki('lbmr')
+    this.measurements = this.db.addCollection('measurements')
+  }
 
-export function getMeasurements() {
-  return allView.data()
+  on(event, callback) {
+    this.ee.addListener(event, callback)
+  }
+
+  addMeasurement(measurement) {
+    const res = this.measurements.insert(measurement)
+
+    const event = 'add measurement'
+    this.ee.emit(event, res)
+
+    return res
+  }
+
+  getMeasurements() {
+    let allView = this.measurements.getDynamicView('all')
+    if (!allView)
+      allView = this.measurements
+        .addDynamicView('all')
+        .applySimpleSort('timestamp')
+
+    return allView.data()
+  }
 }
