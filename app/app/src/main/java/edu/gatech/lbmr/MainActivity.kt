@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     private var heartRateApi: HeartRateApi? = null
     private lateinit var sensors: Sensors
 
+    private val measurementsApi = MeasurementsApi()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         checkPermissions()
         enableSensorApi()
+        enableMeasurementApi()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -113,26 +116,34 @@ class MainActivity : AppCompatActivity() {
         sensors = Sensors(this)
         sensors.subscribe {
             Log.d(TAG, "Event: $it")
+            measurementsApi.addMeasurement(it as VectorData)
         }
         sensors.start()
+    }
+
+    private fun enableMeasurementApi() {
+        measurementsApi.connect()
     }
 
     override fun onPause() {
         super.onPause()
         heartRateApi?.pause()
         sensors.stop()
+        measurementsApi.disconnect()
     }
 
     override fun onResume() {
         super.onResume()
         heartRateApi?.resume()
         sensors.start()
+        measurementsApi.connect()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         heartRateApi?.destroy()
         sensors.stop()
+        measurementsApi.disconnect()
     }
 
     companion object {
