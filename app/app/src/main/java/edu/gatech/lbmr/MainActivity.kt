@@ -1,4 +1,4 @@
-package edu.gatech.lbmr.activity
+package edu.gatech.lbmr
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -9,8 +9,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import edu.gatech.lbmr.R
-import edu.gatech.lbmr.heart_rate.HeartRateApi
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

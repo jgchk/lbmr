@@ -1,4 +1,4 @@
-package edu.gatech.lbmr.heart_rate
+package edu.gatech.lbmr
 
 import android.app.Activity
 import android.util.Log
