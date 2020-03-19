@@ -3,17 +3,20 @@ package edu.gatech.lbmr
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import edu.gatech.lbmr.extension.TAG
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private var heartRateApi: HeartRateApi? = null
+    private lateinit var sensors: Sensors
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         checkPermissions()
+        enableSensorApi()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -105,19 +109,30 @@ class MainActivity : AppCompatActivity() {
         heartRateApi!!.connectDevice(DEVICE_ID)
     }
 
+    private fun enableSensorApi() {
+        sensors = Sensors(this)
+        sensors.subscribe {
+            Log.d(TAG, "Event: $it")
+        }
+        sensors.start()
+    }
+
     override fun onPause() {
         super.onPause()
         heartRateApi?.pause()
+        sensors.stop()
     }
 
     override fun onResume() {
         super.onResume()
         heartRateApi?.resume()
+        sensors.start()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         heartRateApi?.destroy()
+        sensors.stop()
     }
 
     companion object {
