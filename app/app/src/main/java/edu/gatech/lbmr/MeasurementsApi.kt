@@ -21,9 +21,14 @@ class MeasurementsApi {
         "add measurement", JSONObject(
             mapOf(
                 "type" to vectorData.type,
-                "x" to vectorData.x,
-                "y" to vectorData.y,
-                "z" to vectorData.z
+                "data" to JSONObject(
+                    mapOf(
+                        "x" to vectorData.x,
+                        "y" to vectorData.y,
+                        "z" to vectorData.z
+                    )
+                ),
+                "timestamp" to System.currentTimeMillis()
             )
         )
     )

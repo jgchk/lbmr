@@ -18,14 +18,14 @@ class MainActivity : AppCompatActivity() {
     private var heartRateApi: HeartRateApi? = null
     private lateinit var sensors: Sensors
 
-    private val measurementsApi = MeasurementsApi()
+    private var measurementsApi: MeasurementsApi? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        checkPermissions()
+        enableHeartRateApi()
         enableSensorApi()
         enableMeasurementApi()
     }
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkPermissions() {
+    private fun checkBluetoothPermission(): Boolean {
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.BLUETOOTH
@@ -78,8 +78,45 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             // Permission has already been granted
-            enableHeartRateApi()
+            return true
         }
+        return false
+    }
+
+    private fun checkInternetPermission(): Boolean {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.INTERNET
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.INTERNET
+                )
+            ) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                AlertDialog.Builder(this)
+                    .setMessage("Internet is required to report sensor measurements to the server")
+                    .create()
+                    .show()
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.INTERNET),
+                    PERMISSIONS_REQUEST_INTERNET
+                )
+            }
+        } else {
+            // Permission has already been granted
+            return true
+        }
+        return false
     }
 
     override fun onRequestPermissionsResult(
@@ -98,6 +135,17 @@ class MainActivity : AppCompatActivity() {
                 }
                 return
             }
+            PERMISSIONS_REQUEST_INTERNET -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // permission was granted, yay!
+                    enableMeasurementApi()
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    measurementsApi = null
+                }
+                return
+            }
 
             // Add other 'when' lines to check for other
             // permissions this app might request.
@@ -108,6 +156,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun enableHeartRateApi() {
+        if (!checkBluetoothPermission()) return
         heartRateApi = HeartRateApi(this)
         heartRateApi!!.connectDevice(DEVICE_ID)
     }
@@ -116,38 +165,40 @@ class MainActivity : AppCompatActivity() {
         sensors = Sensors(this)
         sensors.subscribe {
             Log.d(TAG, "Event: $it")
-            measurementsApi.addMeasurement(it as VectorData)
+            measurementsApi?.addMeasurement(it)
         }
         sensors.start()
     }
 
     private fun enableMeasurementApi() {
-        measurementsApi.connect()
+        measurementsApi = MeasurementsApi()
+        measurementsApi!!.connect()
     }
 
     override fun onPause() {
         super.onPause()
         heartRateApi?.pause()
         sensors.stop()
-        measurementsApi.disconnect()
+        measurementsApi?.disconnect()
     }
 
     override fun onResume() {
         super.onResume()
         heartRateApi?.resume()
         sensors.start()
-        measurementsApi.connect()
+        measurementsApi?.connect()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         heartRateApi?.destroy()
         sensors.stop()
-        measurementsApi.disconnect()
+        measurementsApi?.disconnect()
     }
 
     companion object {
         const val DEVICE_ID = "682FF628"
         const val PERMISSIONS_REQUEST_BLUETOOTH = 1
+        const val PERMISSIONS_REQUEST_INTERNET = 2
     }
 }
