@@ -1,4 +1,4 @@
-import { addMeasurement } from '../../lib/db'
+import Database from '../../lib/db'
 
 function isNotDefined(val) {
   return val === null || val === undefined
@@ -25,7 +25,7 @@ export default (req, res) => {
         .status(400)
         .json({ error: 'timestamp must be a valid datetime' })
 
-    const response = addMeasurement(type, data, numTimestamp)
+    const response = new Database().addMeasurement(type, data, numTimestamp)
     return res.status(200).json(response)
   } catch (e) {
     return res.status(400).json({ error: 'Invalid JSON' })
