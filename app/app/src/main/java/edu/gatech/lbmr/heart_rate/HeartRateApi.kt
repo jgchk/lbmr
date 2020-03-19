@@ -6,6 +6,7 @@ import edu.gatech.lbmr.extension.TAG
 import polar.com.sdk.api.PolarBleApi
 import polar.com.sdk.api.PolarBleApiCallback
 import polar.com.sdk.api.PolarBleApiDefaultImpl
+import polar.com.sdk.api.errors.PolarInvalidArgument
 import polar.com.sdk.api.model.PolarDeviceInfo
 import polar.com.sdk.api.model.PolarHrData
 
@@ -37,5 +38,27 @@ class HeartRateApi(activity: Activity) {
                 Log.d(TAG, "HR value: " + data.hr)
             }
         })
+    }
+
+    fun pause() {
+        api.backgroundEntered()
+    }
+
+    fun resume() {
+        api.foregroundEntered()
+    }
+
+    fun destroy() {
+        api.shutDown()
+    }
+
+    fun connectDevice(deviceId: String) {
+        try {
+            Log.d(TAG, "trying to connect")
+            api.connectToDevice(deviceId)
+        } catch (polarInvalidArgument: PolarInvalidArgument) {
+            Log.d(TAG, "couldn't connect")
+            polarInvalidArgument.printStackTrace()
+        }
     }
 }

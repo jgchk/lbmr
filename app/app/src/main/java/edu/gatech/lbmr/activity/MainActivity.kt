@@ -104,9 +104,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun enableHeartRateApi() {
         heartRateApi = HeartRateApi(this)
+        heartRateApi!!.connectDevice(DEVICE_ID)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        heartRateApi?.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        heartRateApi?.resume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        heartRateApi?.destroy()
     }
 
     companion object {
+        const val DEVICE_ID = "682FF628"
         const val PERMISSIONS_REQUEST_BLUETOOTH = 1
     }
 }
