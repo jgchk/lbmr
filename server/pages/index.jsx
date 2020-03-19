@@ -1,6 +1,9 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 
-import SocketClient from '../components/SocketClient'
+const SocketClient = dynamic(() => import('../components/SocketClient'), {
+  ssr: false
+})
 
 const Index = () => <SocketClient />
 

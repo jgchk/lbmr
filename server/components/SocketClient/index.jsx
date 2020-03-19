@@ -1,11 +1,9 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import nanoid from 'nanoid'
-import dynamic from 'next/dynamic'
 
+import Socket from '../../lib/socket/client'
 import SocketMessage from '../SocketMessage'
 import SocketMessenger from '../SocketMessenger'
-
-const Socket = dynamic(() => import('../../lib/socket/client'), { ssr: false })
 
 const SocketClient = () => {
   const [messages, setMessages] = useState([])
