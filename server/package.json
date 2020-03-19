@@ -4,15 +4,17 @@
   "main": "index.js",
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "dev": "next",
+    "dev": "node start.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node start.js"
   },
   "dependencies": {
+    "@babel/register": "^7.8.6",
     "lokijs": "^1.5.8",
     "next": "^9.3.0",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
