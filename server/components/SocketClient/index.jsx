@@ -5,7 +5,7 @@ import Socket from '../../lib/socket/client'
 import SocketMessage from '../SocketMessage'
 import SocketMessenger from '../SocketMessenger'
 
-import styles from './styles.less'
+import styles from './styles.module.less'
 
 const SocketClient = () => {
   const [messages, setMessages] = useState([])

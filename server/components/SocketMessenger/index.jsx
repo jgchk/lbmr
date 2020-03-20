@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
-import styles from './styles.less'
+import styles from './styles.module.less'
 
 const SocketMessenger = ({ onSend }) => {
   const [sensorType, setSensorType] = useState('gyro')
