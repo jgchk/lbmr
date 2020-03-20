@@ -1,7 +1,6 @@
 # LBMR
 
 team lofi beats to meditate/relax to 24/7 livestream
-
 project repository
 
 ## Website
