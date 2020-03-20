@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import styles from './styles.module.less'
 
 const SocketMessenger = ({ onSend }) => {
-  const [sensorType, setSensorType] = useState('gyro')
+  const [sensorType, setSensorType] = useState('rotation')
   const onSensorTypeChange = useCallback(e => setSensorType(e.target.value), [])
 
   const [x, setX] = useState(0)
