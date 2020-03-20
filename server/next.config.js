@@ -18,6 +18,7 @@ module.exports = withPlugins([optimizedImages], {
               }
             }
           },
+          { loader: 'postcss-loader' },
           { loader: 'less-loader' }
         ]
       },
@@ -30,6 +31,7 @@ module.exports = withPlugins([optimizedImages], {
             loader: 'css-loader',
             options: { sourceMap: dev }
           },
+          { loader: 'postcss-loader' },
           { loader: 'less-loader' }
         ]
       },
