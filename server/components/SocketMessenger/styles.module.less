@@ -1,0 +1,103 @@
+@import '../../styles/colors.less';
+@import '../../styles/fonts.less';
+
+.container {
+  display: flex;
+  flex-direction: row;
+
+  align-items: stretch;
+}
+
+.sensor {
+  display: flex;
+
+  margin-right: 16px;
+
+  padding-right: 16px;
+
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+
+  border-right: 1px solid @lighterBackground;
+
+  & .input {
+    margin-left: 8px;
+  }
+}
+
+.data {
+  display: flex;
+  flex: 10;
+  flex-direction: row;
+  align-items: center;
+}
+
+.fields {
+  display: flex;
+
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+
+  color: @darkerForeground;
+
+  font-size: small;
+}
+
+.field {
+  display: flex;
+
+  margin-right: 16px;
+
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+}
+
+.field:first-child {
+  margin-left: 12px;
+}
+
+.field:last-child {
+  margin-right: 0;
+}
+
+.input {
+  margin-left: 4px;
+
+  padding: 4px 4px;
+
+  flex: 1;
+
+  color: @darkForeground;
+
+  background-color: @background;
+
+  border: 1px solid @lighterBackground;
+}
+
+.submit {
+  margin-left: 16px;
+  padding-left: 16px;
+  flex: 1;
+  border-left: 1px solid @lighterBackground;
+}
+
+.button {
+  width: 100%;
+  height: 100%;
+
+  color: @foreground;
+
+  background-color: @lighterBackground;
+
+  border: 1px solid @lightestBackground;
+
+  cursor: pointer;
+
+  &:hover {
+    color: @lightForeground;
+    background: @lightestBackground;
+  }
+}
