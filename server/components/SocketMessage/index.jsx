@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const SocketMessage = ({ message }) => <div>{message}</div>
+import styles from './styles.less'
+
+const SocketMessage = ({ message }) => (
+  <div className={styles.container}>{message}</div>
+)
 
 SocketMessage.propTypes = {
   message: PropTypes.string.isRequired

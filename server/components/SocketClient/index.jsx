@@ -1,9 +1,11 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import nanoid from 'nanoid'
 
 import Socket from '../../lib/socket/client'
 import SocketMessage from '../SocketMessage'
 import SocketMessenger from '../SocketMessenger'
+
+import styles from './styles.less'
 
 const SocketClient = () => {
   const [messages, setMessages] = useState([])
@@ -36,16 +38,27 @@ const SocketClient = () => {
     [io]
   )
 
+  const endRef = useRef(null)
+  const scrollToBottom = useCallback(
+    () => endRef.current.scrollIntoView({ behavior: 'smooth' }),
+    []
+  )
+
+  useEffect(scrollToBottom, [scrollToBottom, messages])
+
   return (
-    <div>
-      <div>
+    <div className={styles.container}>
+      <div className={styles.messages}>
         {messages
           .sort((a, b) => a.timestamp - b.timestamp)
           .map(({ id, message }) => (
             <SocketMessage key={id} message={message} />
           ))}
+        <div className={styles.end} ref={endRef} />
       </div>
-      <SocketMessenger onSend={sendMeasurement} />
+      <div className={styles.messenger}>
+        <SocketMessenger onSend={sendMeasurement} />
+      </div>
     </div>
   )
 }

@@ -1,0 +1,36 @@
+@import '../../styles/colors.less';
+@import '../../styles/fonts.less';
+
+.container {
+  display: flex;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  flex-direction: column;
+
+  color: @foreground;
+  font-family: @Roboto;
+
+  background-color: @background;
+}
+
+.messages {
+  min-height: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.end {
+  float: left;
+  clear: both;
+}
+
+.messenger {
+  padding: 16px;
+  background-color: @lightBackground;
+  border-top: 1px solid @lighterBackground;
+}

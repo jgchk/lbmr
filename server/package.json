@@ -11,6 +11,8 @@
   "dependencies": {
     "@babel/preset-env": "^7.8.7",
     "@babel/register": "^7.8.6",
+    "@zeit/next-less": "^1.0.1",
+    "less": "^3.11.1",
     "lokijs": "^1.5.8",
     "nanoid": "^2.1.11",
     "next": "^9.3.0",
@@ -30,6 +32,9 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "stylelint": "^13.2.1",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.0.0"
   }
 }

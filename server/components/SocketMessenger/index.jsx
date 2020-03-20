@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
+import styles from './styles.less'
+
 const SocketMessenger = ({ onSend }) => {
   const [sensorType, setSensorType] = useState('gyro')
   const onSensorTypeChange = useCallback(e => setSensorType(e.target.value), [])
@@ -28,11 +30,12 @@ const SocketMessenger = ({ onSend }) => {
   )
 
   return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor='sensor-type'>
-        Sensor:
+    <form onSubmit={onSubmit} className={styles.container}>
+      <label htmlFor='sensor-type' className={styles.sensor}>
+        Sensor
         <select
           id='sensor-type'
+          className={styles.input}
           value={sensorType}
           onChange={onSensorTypeChange}
         >
@@ -41,43 +44,48 @@ const SocketMessenger = ({ onSend }) => {
         </select>
       </label>
 
-      <label htmlFor='sensor-data'>
-        Data:
-        <fieldset id='sensor-data'>
-          <label htmlFor='data-x'>
-            x:
+      <label htmlFor='sensor-data' className={styles.data}>
+        Data
+        <div id='sensor-data' className={styles.fields}>
+          <label htmlFor='data-x' className={styles.field}>
+            x
             <input
               id='data-x'
+              className={styles.input}
               type='number'
               step='any'
               value={x}
               onChange={onXChange}
             />
           </label>
-          <label htmlFor='data-y'>
-            y:
+          <label htmlFor='data-y' className={styles.field}>
+            y
             <input
               id='data-y'
+              className={styles.input}
               type='number'
               step='any'
               value={y}
               onChange={onYChange}
             />
           </label>
-          <label htmlFor='data-z'>
-            z:
+          <label htmlFor='data-z' className={styles.field}>
+            z
             <input
               id='data-z'
+              className={styles.input}
               type='number'
               step='any'
               value={z}
               onChange={onZChange}
             />
           </label>
-        </fieldset>
+        </div>
       </label>
 
-      <input type='submit' value='Submit' />
+      <div className={styles.submit}>
+        <input type='submit' value='Submit' className={styles.button} />
+      </div>
     </form>
   )
 }
