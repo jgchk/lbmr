@@ -11,7 +11,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.8.7",
     "@babel/register": "^7.8.6",
-    "highlight.js": "^9.18.1",
+    "highlight.js": "^10.1.2",
     "imagemin-pngquant": "^8.0.0",
     "less": "^3.11.1",
     "lokijs": "^1.5.8",
