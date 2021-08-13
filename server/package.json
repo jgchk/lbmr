@@ -16,7 +16,7 @@
     "less": "^3.11.1",
     "lokijs": "^1.5.8",
     "nanoid": "^2.1.11",
-    "next": "^9.3.2",
+    "next": "^11.1.0",
     "next-compose-plugins": "^2.2.0",
     "next-optimized-images": "^2.5.5",
     "prop-types": "^15.7.2",
